@@ -1,0 +1,380 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>main</title><meta name="generator" content="MATLAB 9.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-04-26"><meta name="DC.source" content="main.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Image Loading</a></li><li><a href="#2">Problem 3</a></li><li><a href="#3">Part (a)</a></li><li><a href="#4">Part (b)</a></li><li><a href="#5">Part (c)</a></li><li><a href="#6">Part (d)</a></li><li><a href="#9">Part (e)</a></li><li><a href="#12">Problem 4</a></li><li><a href="#13">Reload image for color</a></li><li><a href="#14">Problem 5</a></li><li><a href="#15">Problem 6</a></li><li><a href="#16">Transform into luminance</a></li><li><a href="#17">Do regular quantization on luminance matrices</a></li><li><a href="#18">Transform out of luminance</a></li></ul></div><h2 id="1">Image Loading</h2><pre class="codeinput">loadimg;
+setupgray;
+
+imagesc(img);colormap(gray)
+</pre><img vspace="5" hspace="5" src="main_01.png" alt=""> <h2 id="2">Problem 3</h2><h2 id="3">Part (a)</h2><pre class="codeinput">x = 64; y = 64;
+
+X = double(img(x+1:x+8, y+1:y+8));
+imagesc(X);colormap(gray)
+</pre><img vspace="5" hspace="5" src="main_02.png" alt=""> <h2 id="4">Part (b)</h2><pre class="codeinput">X = X - 128;
+
+Y = dct(dct(X')')
+</pre><pre class="codeoutput">
+Y =
+
+  Columns 1 through 7
+
+ -497.0000   52.3921    3.3060    6.8955    2.2500    0.5030    0.7954
+  -16.0477   -4.4557   -2.1043   -1.3076   -0.3779   -0.5087   -0.6062
+    2.4614   -0.2406    0.1036    0.7389   -0.3663    0.0195    0.0000
+   -2.4613   -2.1852   -0.3232   -0.4634    0.4795   -0.0585    0.0911
+    0.7500    0.1815    0.0957   -0.1327   -0.0000   -0.0264    0.2310
+    0.1488    0.7896   -0.2973   -0.5156   -0.0426    0.3348    0.0272
+    0.0628    0.1158   -0.0000   -0.5378    0.4223    0.0951   -0.6036
+    0.1306    0.2144   -0.0166    0.4480   -0.0224    0.1924    0.0459
+
+  Column 8
+
+   -0.6282
+    1.1715
+    1.3533
+    0.7104
+   -0.2716
+   -0.1245
+    0.0516
+    0.0844
+
+</pre><h2 id="5">Part (c)</h2><pre class="codeinput">setupq;
+
+<span class="keyword">for</span> p = [1 2 4]
+    Q = Qbase * p;
+    Yq = round(Y ./ Q)
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">
+Yq =
+
+   -62     3     0     0     0     0     0     0
+    -1     0     0     0     0     0     0     0
+     0     0     0     0     0     0     0     0
+     0     0     0     0     0     0     0     0
+     0     0     0     0     0     0     0     0
+     0     0     0     0     0     0     0     0
+     0     0     0     0     0     0     0     0
+     0     0     0     0     0     0     0     0
+
+
+Yq =
+
+   -31     2     0     0     0     0     0     0
+    -1     0     0     0     0     0     0     0
+     0     0     0     0     0     0     0     0
+     0     0     0     0     0     0     0     0
+     0     0     0     0     0     0     0     0
+     0     0     0     0     0     0     0     0
+     0     0     0     0     0     0     0     0
+     0     0     0     0     0     0     0     0
+
+
+Yq =
+
+   -16     1     0     0     0     0     0     0
+     0     0     0     0     0     0     0     0
+     0     0     0     0     0     0     0     0
+     0     0     0     0     0     0     0     0
+     0     0     0     0     0     0     0     0
+     0     0     0     0     0     0     0     0
+     0     0     0     0     0     0     0     0
+     0     0     0     0     0     0     0     0
+
+</pre><h2 id="6">Part (d)</h2><pre class="codeinput">X = double(img(x+1:x+8, y+1:y+8));
+pics = zeros(8,8,4);
+
+<span class="keyword">for</span> p = [1 2 4]
+    Xmod = quantize(X, Qbase, p);
+    pics(:,:,p) = Xmod;
+<span class="keyword">end</span>
+
+imagesc(pics(:,:,1));colormap(gray)
+</pre><img vspace="5" hspace="5" src="main_03.png" alt=""> <pre class="codeinput">imagesc(pics(:,:,2));colormap(gray)
+</pre><img vspace="5" hspace="5" src="main_04.png" alt=""> <pre class="codeinput">imagesc(pics(:,:,4));colormap(gray)
+</pre><img vspace="5" hspace="5" src="main_05.png" alt=""> <h2 id="9">Part (e)</h2><pre class="codeinput">imgmod = zeros(h,w);
+pics = zeros(h,w,4);
+
+<span class="keyword">for</span> p = [1 2 4]
+    <span class="keyword">for</span> x = 0:8:w-8
+        <span class="keyword">for</span> y = 0:8:h-8
+            X = double(img(y+1:y+8,x+1:x+8));
+            Xmod = quantize(X, Qbase, p);
+            imgmod(y+1:y+8,x+1:x+8) = Xmod;
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+
+    pics(:,:,p) = imgmod;
+<span class="keyword">end</span>
+
+imagesc(pics(:,:,1));colormap(gray)
+</pre><img vspace="5" hspace="5" src="main_06.png" alt=""> <pre class="codeinput">imagesc(pics(:,:,2));colormap(gray)
+</pre><img vspace="5" hspace="5" src="main_07.png" alt=""> <pre class="codeinput">imagesc(pics(:,:,4));colormap(gray)
+</pre><img vspace="5" hspace="5" src="main_08.png" alt=""> <h2 id="12">Problem 4</h2><pre class="codeinput">imgmod = zeros(h,w);
+
+<span class="keyword">for</span> x = 0:8:w-8
+    <span class="keyword">for</span> y = 0:8:h-8
+        X = double(img(y+1:y+8,x+1:x+8));
+        Xmod = quantize(X, Qjpeg, 1);
+        imgmod(y+1:y+8,x+1:x+8) = Xmod;
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+imagesc(imgmod);colormap(gray)
+</pre><img vspace="5" hspace="5" src="main_09.png" alt=""> <h2 id="13">Reload image for color</h2><pre class="codeinput">loadimg;
+imagesc(img);
+</pre><img vspace="5" hspace="5" src="main_10.png" alt=""> <h2 id="14">Problem 5</h2><pre class="codeinput">imgmod = zeros([h w c]);
+
+<span class="keyword">for</span> x = 0:8:w-8
+    <span class="keyword">for</span> y = 0:8:h-8
+        <span class="keyword">for</span> z = 1:c
+            X = double(img(y+1:y+8,x+1:x+8,z));
+            Xmod = quantize(X, Qbase, 2);
+            imgmod(y+1:y+8,x+1:x+8,z) = Xmod;
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+imagesc(uint8(imgmod));
+</pre><img vspace="5" hspace="5" src="main_11.png" alt=""> <h2 id="15">Problem 6</h2><pre class="codeinput">imgmod = zeros([h w c]);
+</pre><h2 id="16">Transform into luminance</h2><pre class="codeinput">yuv = double(img);
+
+r=yuv(:,:,1);g=yuv(:,:,2);b=yuv(:,:,3);
+
+y = 0.299*r + 0.587*g + 0.114*b;
+u = b - y;
+v = r - y;
+
+yuv(:,:,1)=y;yuv(:,:,2)=u;yuv(:,:,3)=v;
+
+yuvmod = zeros([h w c]);
+</pre><h2 id="17">Do regular quantization on luminance matrices</h2><pre class="codeinput"><span class="keyword">for</span> x = 0:8:w-8
+    <span class="keyword">for</span> y = 0:8:h-8
+        <span class="keyword">for</span> z = 1:c
+            X = yuv(y+1:y+8,x+1:x+8,z);
+            Xmod = quantize(X, Qjpeg, 2);
+            yuvmod(y+1:y+8,x+1:x+8,z) = Xmod;
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre><h2 id="18">Transform out of luminance</h2><pre class="codeinput">y=yuvmod(:,:,1);u=yuvmod(:,:,2);v=yuvmod(:,:,3);
+
+b = u + y;
+r = v + y;
+g = (y - 0.299*r - 0.114*b)/0.587;
+
+imgmod(:,:,1)=r;imgmod(:,:,2)=g;imgmod(:,:,3)=b;
+
+imagesc(uint8(imgmod));
+</pre><img vspace="5" hspace="5" src="main_12.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Image Loading
+
+loadimg;
+setupgray;
+
+imagesc(img);colormap(gray)
+
+%% Problem 3
+%% Part (a)
+
+x = 64; y = 64;
+
+X = double(img(x+1:x+8, y+1:y+8));
+imagesc(X);colormap(gray)
+
+%% Part (b)
+
+X = X - 128;
+
+Y = dct(dct(X')')
+
+%% Part (c)
+
+setupq;
+
+for p = [1 2 4]
+    Q = Qbase * p;
+    Yq = round(Y ./ Q)
+end
+
+%% Part (d)
+
+X = double(img(x+1:x+8, y+1:y+8));
+pics = zeros(8,8,4);
+
+for p = [1 2 4]
+    Xmod = quantize(X, Qbase, p);
+    pics(:,:,p) = Xmod;
+end
+
+imagesc(pics(:,:,1));colormap(gray)
+%%
+imagesc(pics(:,:,2));colormap(gray)
+%%
+imagesc(pics(:,:,4));colormap(gray)
+
+%% Part (e)
+
+imgmod = zeros(h,w);
+pics = zeros(h,w,4);
+
+for p = [1 2 4]
+    for x = 0:8:w-8
+        for y = 0:8:h-8
+            X = double(img(y+1:y+8,x+1:x+8));
+            Xmod = quantize(X, Qbase, p);
+            imgmod(y+1:y+8,x+1:x+8) = Xmod;
+        end
+    end
+    
+    pics(:,:,p) = imgmod;
+end
+
+imagesc(pics(:,:,1));colormap(gray)
+%%
+imagesc(pics(:,:,2));colormap(gray)
+%%
+imagesc(pics(:,:,4));colormap(gray)
+
+%% Problem 4
+
+imgmod = zeros(h,w);
+
+for x = 0:8:w-8
+    for y = 0:8:h-8
+        X = double(img(y+1:y+8,x+1:x+8));
+        Xmod = quantize(X, Qjpeg, 1);
+        imgmod(y+1:y+8,x+1:x+8) = Xmod;
+    end
+end
+
+imagesc(imgmod);colormap(gray)
+
+%% Reload image for color
+
+loadimg;
+imagesc(img);
+
+%% Problem 5
+
+imgmod = zeros([h w c]);
+
+for x = 0:8:w-8
+    for y = 0:8:h-8
+        for z = 1:c
+            X = double(img(y+1:y+8,x+1:x+8,z));
+            Xmod = quantize(X, Qbase, 2);
+            imgmod(y+1:y+8,x+1:x+8,z) = Xmod;
+        end
+    end
+end
+
+imagesc(uint8(imgmod));
+
+%% Problem 6
+
+imgmod = zeros([h w c]);
+
+%% Transform into luminance
+
+yuv = double(img);
+
+r=yuv(:,:,1);g=yuv(:,:,2);b=yuv(:,:,3);
+
+y = 0.299*r + 0.587*g + 0.114*b;
+u = b - y;
+v = r - y;
+
+yuv(:,:,1)=y;yuv(:,:,2)=u;yuv(:,:,3)=v;
+
+yuvmod = zeros([h w c]);
+
+%% Do regular quantization on luminance matrices
+
+for x = 0:8:w-8
+    for y = 0:8:h-8
+        for z = 1:c
+            X = yuv(y+1:y+8,x+1:x+8,z);
+            Xmod = quantize(X, Qjpeg, 2);
+            yuvmod(y+1:y+8,x+1:x+8,z) = Xmod;
+        end
+    end
+end
+
+%% Transform out of luminance
+
+y=yuvmod(:,:,1);u=yuvmod(:,:,2);v=yuvmod(:,:,3);
+
+b = u + y;
+r = v + y;
+g = (y - 0.299*r - 0.114*b)/0.587;
+
+imgmod(:,:,1)=r;imgmod(:,:,2)=g;imgmod(:,:,3)=b;
+
+imagesc(uint8(imgmod));
+##### SOURCE END #####
+--></body></html>
